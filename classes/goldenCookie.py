@@ -1,5 +1,5 @@
 import pygame as pg
-from utils import resource_path, step
+from classes.utils import resource_path, step
 from random import randint
 from math import sin
 

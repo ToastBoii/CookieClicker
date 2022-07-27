@@ -1,5 +1,5 @@
 import pygame as pg
-from utils import resource_path
+from classes.utils import resource_path
 from random import randint
 
 

@@ -4,12 +4,12 @@ import pygame as pg
 import itertools
 import sys
 
-from utils import resource_path
-from cookie import Cookie
-from goldenCookie import GoldenCookie
-from cookieParticle import CookieParticle
-from cookieDisplay import cookieDisplay
-from cookieHandler import cookieHandler
+from classes.utils import resource_path
+from classes.cookie import Cookie
+from classes.goldenCookie import GoldenCookie
+from classes.cookieParticle import CookieParticle
+from classes.cookieDisplay import cookieDisplay
+from classes.cookieHandler import cookieHandler
 
 # Setup Window
 

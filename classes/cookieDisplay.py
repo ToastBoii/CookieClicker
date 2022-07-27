@@ -1,5 +1,5 @@
 import pygame as pg
-from utils import resource_path, draw_rect_alpha, numberize
+from classes.utils import resource_path, draw_rect_alpha, numberize
 
 
 class cookieDisplay:
