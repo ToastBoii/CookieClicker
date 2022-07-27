@@ -8,7 +8,7 @@ a = Analysis(
     ['C:/Users/Michael/PycharmProjects/CookieClicker/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:/Users/Michael/PycharmProjects/CookieClicker/cookie.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieDisplay.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieHandler.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/numberize.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/textures', 'textures/')],
+    datas=[('C:/Users/Michael/PycharmProjects/CookieClicker/cookie.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieDisplay.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieHandler.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieParticle.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/goldenCookie.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/utils.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/textures', 'textures/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

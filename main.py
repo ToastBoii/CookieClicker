@@ -106,7 +106,7 @@ def update():
 
     particle.update(cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), deltaTime, handler.cps)
     golden.update(deltaTime, pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-    handler.update(10000000000000000000000, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
+    handler.update(0, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
                    )
     cookie.update(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
     display.update(handler.cookies, handler.cps)

@@ -19,6 +19,7 @@ class CookieParticle:
         self.pressed = False
 
     def update(self, cookiePressed, deltaTime, cps):
+
         # Remove Unrenderd Particles
 
         for i in range(len(self.particles)):
