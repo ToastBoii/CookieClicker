@@ -1,5 +1,5 @@
 import pygame as pg
-from classes.utils import resource_path, draw_rect_alpha, numberize
+from utils import resource_path, draw_rect_alpha, numberize
 
 
 class cookieDisplay:
@@ -14,16 +14,7 @@ class cookieDisplay:
         self.cookieTextRect = self.cookieText.get_rect()
         self.cpsTextRect = self.cpsText.get_rect()
 
-        self.cookies = 0
-        self.cps = 0
-
-    def update(self, cookies, cps):
-        # Get Cookies and Cookies Per Second
-
-        self.cookies = cookies
-        self.cps = cps
-
-    def render(self):
+    def render(self, cookies, cps):
 
         # Draw Transparent Background
 
@@ -32,8 +23,8 @@ class cookieDisplay:
 
         # Set Text Lables
 
-        self.cookieText = self.fontLarge.render(str(numberize(self.cookies)) + " Cookies", False, (255, 255, 255))
-        self.cpsText = self.fontSmall.render(str(numberize(self.cps)) + " Cps", False, (255, 255, 255))
+        self.cookieText = self.fontLarge.render(str(numberize(cookies)) + " Cookies", False, (255, 255, 255))
+        self.cpsText = self.fontSmall.render(str(numberize(cps)) + " Cps", False, (255, 255, 255))
 
         # Render and Position Labels
 

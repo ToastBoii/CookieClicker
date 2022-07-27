@@ -1,5 +1,5 @@
 import pygame as pg
-from classes.utils import resource_path, step
+from utils import resource_path, step
 
 
 class Cookie:

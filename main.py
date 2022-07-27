@@ -4,9 +4,10 @@ import pygame as pg
 import itertools
 import sys
 
-from classes.utils import resource_path
+from utils import resource_path
 from classes.cookie import Cookie
 from classes.goldenCookie import GoldenCookie
+from classes.goldenCookieFrame import GoldenCookieFrame
 from classes.cookieParticle import CookieParticle
 from classes.cookieDisplay import cookieDisplay
 from classes.cookieHandler import cookieHandler
@@ -35,6 +36,7 @@ golden = GoldenCookie(screen)
 particle = CookieParticle(screen)
 display = cookieDisplay(screen)
 handler = cookieHandler()
+frame = GoldenCookieFrame(screen)
 
 # Textures
 
@@ -76,9 +78,10 @@ def render():
 
     particle.render(deltaTime)
 
-    display.render()
+    display.render(handler.cookies, handler.tempCps)
     cookie.render()
 
+    frame.render(golden.active, golden.cookieEffect)
     golden.render()
 
     # Render Quitting Animation
@@ -106,10 +109,9 @@ def update():
 
     particle.update(cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), deltaTime, handler.cps)
     golden.update(deltaTime, pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-    handler.update(0, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-                   )
+    handler.update(5, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), golden.active,
+                   golden.cookieEffect)
     cookie.update(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-    display.update(handler.cookies, handler.cps)
 
 
 getTicksLastFrame = pg.time.get_ticks()

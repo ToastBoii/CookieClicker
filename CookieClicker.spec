@@ -8,7 +8,7 @@ a = Analysis(
     ['C:/Users/Michael/PycharmProjects/CookieClicker/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:/Users/Michael/PycharmProjects/CookieClicker/cookie.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieDisplay.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieHandler.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/cookieParticle.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/goldenCookie.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/utils.py', '.'), ('C:/Users/Michael/PycharmProjects/CookieClicker/textures', 'textures/')],
+    datas=[('C:/Users/Michael/PycharmProjects/CookieClicker/textures', 'textures/'), ('C:/Users/Michael/PycharmProjects/CookieClicker/classes', 'classes/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -20,15 +20,6 @@ a = Analysis(
     noarchive=False,
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
-splash = Splash(
-    'C:/Users/Michael/PycharmProjects/CookieClicker/textures/icon/splash.png',
-    binaries=a.binaries,
-    datas=a.datas,
-    text_pos=None,
-    text_size=12,
-    minify_script=True,
-    always_on_top=True,
-)
 
 exe = EXE(
     pyz,
@@ -36,8 +27,6 @@ exe = EXE(
     a.binaries,
     a.zipfiles,
     a.datas,
-    splash,
-    splash.binaries,
     [],
     name='CookieClicker',
     debug=False,

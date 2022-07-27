@@ -1,7 +1,9 @@
 import pygame as pg
-from classes.utils import resource_path, step
+from utils import resource_path, step
 from random import randint
+from time import sleep
 from math import sin
+import threading
 
 
 class GoldenCookie:
@@ -11,11 +13,14 @@ class GoldenCookie:
         self.angle = 0
         self.angleTemp = 0
         self.minWaitTime = 50
-        self.maxWaitTime = 100
+        self.maxWaitTime = 150
         self.waitTime = randint(self.minWaitTime, self.maxWaitTime)
         self.hideTime = 5
         self.visible = False
+
         self.active = False
+        self.cookieEffect = 0
+        self.thread = None
 
         self.scale = 23
 
@@ -38,7 +43,7 @@ class GoldenCookie:
 
     def update(self, deltaTime, mousePos, mouseClicked):
 
-        #
+        # Generate when to show up next
 
         if self.waitTime <= 0:
             self.visible = True
@@ -77,7 +82,9 @@ class GoldenCookie:
                 self.randY = randint(self.goldenCookie.get_height(), pg.display.get_surface().get_height() -
                                      self.goldenCookie.get_height() * 2)
                 self.visible = False
-                self.active = True
+                self.cookieEffect = randint(0, 1)  # Change after adding another Effect
+                self.thread = threading.Thread(target=self.effectCountdown)
+                self.thread.start()
         else:
             self.scale = step(self.scale, self.scaleIdle, 0.8)
 
@@ -89,6 +96,11 @@ class GoldenCookie:
         self.goldenCookie.convert()
 
         self.cookieRotated = pg.transform.rotate(self.goldenCookie, self.angle)
+
+    def effectCountdown(self):
+        self.active = True
+        sleep(20)
+        self.active = False
 
     def render(self):
         if self.visible:
