@@ -8,8 +8,8 @@ class CookieParticle:
         self.screen = screen
 
         self.spawnTime = 0.05
-        self.cpsRanges = [10, 100, 500, 1000, 1000000, 1000000000, 1000000000000, 1000000000000000, 1000000000000000000,
-                          1000000000000000000000]
+        self.cpsRanges = [10, 100, 500, 1000, 1000000, 1000000000, 1000000000000, 1000000000000000,
+                          1000000000000000000, 1000000000000000000000]
         self.spawnIntervals = [5, 3, 2, 1, 0.8, 0.5, 0.3, 0.2, 0.1, 0.05]
 
         self.particles = []
@@ -52,23 +52,24 @@ class CookieParticle:
 
         # Add Particle from Cps
 
-        if self.spawnTime <= 0:
-            self.particles.append(pg.image.load(resource_path("textures/particle.png")))
-            self.particles[len(self.particles) - 1] = pg.transform.scale(self.particles[len(self.particles) - 1], (32,
-                                                                                                                   32))
-            self.particles[len(self.particles) - 1].convert()
+        if cps != 0:
+            if self.spawnTime <= 0:
+                self.particles.append(pg.image.load(resource_path("textures/particle.png")))
+                self.particles[len(self.particles) - 1] = pg.transform.scale(self.particles[len(self.particles) - 1], (32,
+                                                                                                                       32))
+                self.particles[len(self.particles) - 1].convert()
 
-            self.particleRect.append(self.particles[len(self.particles) - 1].get_rect())
-            self.particleRect[len(self.particles) - 1].center = (randint(0, pg.display.get_surface().get_width()), 0)
+                self.particleRect.append(self.particles[len(self.particles) - 1].get_rect())
+                self.particleRect[len(self.particles) - 1].center = (randint(0, pg.display.get_surface().get_width()), 0)
 
-            self.angles.append(randint(0, 360))
+                self.angles.append(randint(0, 360))
 
-            for i in range(len(self.spawnIntervals)):
-                if cps < self.cpsRanges[i]:
-                    self.spawnTime = self.spawnIntervals[i]
-                    break
-        else:
-            self.spawnTime -= deltaTime
+                for i in range(len(self.spawnIntervals)):
+                    if cps <= self.cpsRanges[i]:
+                        self.spawnTime = self.spawnIntervals[i]
+                        break
+            else:
+                self.spawnTime -= deltaTime
 
     def render(self, deltaTime):
         for i in range(len(self.particles)):
