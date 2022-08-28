@@ -1,5 +1,6 @@
 import threading
 from random import randint
+from sounds.soundManager import playSound
 
 
 class cookieHandler:
@@ -39,10 +40,13 @@ class cookieHandler:
         # Add CPC to Cookies when Cookie is pressed
 
         if cookiePressed and not self.pressed:
+            playSound('sounds/click.wav')
             self.pressed = True
             self.cookies += tempCookies
             self.cheatCookies += tempCookies
         elif not cookiePressed:
+            if self.pressed:
+                playSound('sounds/unclick.wav')
             self.pressed = False
 
         # Cheat Engine detection

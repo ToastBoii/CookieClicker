@@ -1,7 +1,7 @@
 # Import
 
 import pygame as pg
-import itertools
+from itertools import product
 import sys
 
 from utils import resource_path
@@ -65,7 +65,7 @@ def render():
 
     # Cover Background in Texture
 
-    for x, y in itertools.product(range(0, screen.get_width() + 1, bg.get_rect().width),
+    for x, y in product(range(0, screen.get_width() + 1, bg.get_rect().width),
                                   range(0, screen.get_height() + 1, bg.get_rect().height)):
         screen.blit(bg, (x, y))
 

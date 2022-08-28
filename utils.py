@@ -3,6 +3,7 @@ from decimal import Decimal
 import sys
 import os
 
+
 # Modified Version of Numerize Package
 
 
@@ -40,7 +41,6 @@ def numberize(n, decimals=2, formating=None):
 
 
 def resource_path(relative_path):
-
     # Credit: Max(https://stackoverflow.com/users/1889973/max)
 
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -54,7 +54,6 @@ def resource_path(relative_path):
 
 
 def draw_rect_alpha(surface, color, rect):
-
     # Draw Transparent Rectangle
 
     shape_surf = pg.Surface(pg.Rect(rect).size, pg.SRCALPHA)
@@ -63,7 +62,6 @@ def draw_rect_alpha(surface, color, rect):
 
 
 def step(pos, end, stepSize):
-
     # Step from the Current Position to End Position for Animations
 
     if pos < end:

@@ -27,7 +27,7 @@ class Cookie:
 
         if self.cookieRect.collidepoint(mousePos):
             if mouseClicked:
-                self.cookieScale = step(self.cookieScale, self.cookieScaleClicked, 0.1)
+                self.cookieScale = step(self.cookieScale, self.cookieScaleClicked, 0.2)
             else:
                 self.cookieScale = step(self.cookieScale, self.cookieScaleHover, 0.1)
         else:
