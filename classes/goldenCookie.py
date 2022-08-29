@@ -1,4 +1,5 @@
 import pygame as pg
+from sounds.soundManager import playSound
 from utils import resource_path, step
 from random import randint
 from time import sleep
@@ -77,6 +78,7 @@ class GoldenCookie:
         if self.goldenCookieRect.collidepoint(mousePos) and self.visible:
             self.scale = step(self.scale, self.scaleHover, 0.8)
             if mouseClicked:
+                playSound(resource_path("sounds/click.wav"))
                 self.randX = randint(self.goldenCookie.get_width(), pg.display.get_surface().get_width() -
                                      self.goldenCookie.get_width() * 2)
                 self.randY = randint(self.goldenCookie.get_height(), pg.display.get_surface().get_height() -
@@ -104,7 +106,6 @@ class GoldenCookie:
 
     def render(self):
         if self.visible:
-
             # Render and Position Golden Cookie
 
             self.goldenCookieRect.center = (self.randX, self.randY)
