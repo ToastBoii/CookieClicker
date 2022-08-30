@@ -2,7 +2,7 @@ import pygame as pg
 from utils import resource_path, draw_rect_alpha, numberize
 
 
-class cookieDisplay:
+class CookieDisplay:
     def __init__(self, screen):
         self.screen = screen
         self.fontLarge = pg.font.Font(resource_path("textures/font/retro.ttf"), 32)

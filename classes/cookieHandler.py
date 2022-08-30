@@ -4,7 +4,7 @@ from utils import resource_path
 from sounds.soundManager import playSound
 
 
-class cookieHandler:
+class CookieHandler:
     def __init__(self):
         self.cookies = 0
         self.randOffset = randint(0, 100)

@@ -5,12 +5,18 @@ from itertools import product
 import sys
 
 from utils import resource_path
+from classes.discordRPC import updateParameters, disconectRPC
+
+# Base Game
 from classes.cookie import Cookie
 from classes.goldenCookie import GoldenCookie
 from classes.goldenCookieFrame import GoldenCookieFrame
 from classes.cookieParticle import CookieParticle
-from classes.cookieDisplay import cookieDisplay
-from classes.cookieHandler import cookieHandler
+from classes.cookieDisplay import CookieDisplay
+from classes.cookieHandler import CookieHandler
+
+# Shop
+from classes.shop import Shop
 
 # Setup Window
 
@@ -34,9 +40,11 @@ quitTimer = 3
 cookie = Cookie(screen)
 golden = GoldenCookie(screen)
 particle = CookieParticle(screen)
-display = cookieDisplay(screen)
-handler = cookieHandler()
+display = CookieDisplay(screen)
+handler = CookieHandler()
 frame = GoldenCookieFrame(screen)
+
+shop = Shop(screen)
 
 # Textures
 
@@ -54,11 +62,11 @@ goldenVignette.convert_alpha()
 
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
 
+
 # Game Loop
 
 
 def render():
-
     # Fill Screen for any unfilled Areas
 
     screen.fill((110, 100, 255))
@@ -66,7 +74,7 @@ def render():
     # Cover Background in Texture
 
     for x, y in product(range(0, screen.get_width() + 1, bg.get_rect().width),
-                                  range(0, screen.get_height() + 1, bg.get_rect().height)):
+                        range(0, screen.get_height() + 1, bg.get_rect().height)):
         screen.blit(bg, (x, y))
 
     if not golden.active:
@@ -80,6 +88,8 @@ def render():
 
     display.render(handler.cookies, handler.tempCps)
     cookie.render()
+
+    shop.render()
 
     frame.render(golden.active, golden.cookieEffect)
     golden.render()
@@ -104,7 +114,6 @@ def render():
 
 
 def update():
-
     # Update Classes
 
     particle.update(cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), deltaTime, handler.cps)
@@ -112,6 +121,9 @@ def update():
     handler.update(5, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), golden.active,
                    golden.cookieEffect)
     cookie.update(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
+    shop.update(deltaTime)
+
+    updateParameters(handler.cookies, deltaTime)
 
 
 getTicksLastFrame = pg.time.get_ticks()
@@ -129,6 +141,7 @@ while running:
 
     for event in pg.event.get():
         if event.type == pg.QUIT:
+            disconectRPC()
             handler.quit()
             sys.exit()
 
@@ -155,5 +168,6 @@ while running:
 
 # Shut down Game
 
+disconectRPC()
 handler.quit()
 pg.quit()
