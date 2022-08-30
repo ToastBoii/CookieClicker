@@ -114,14 +114,17 @@ def render():
 
 
 def update():
+    mousePos = pg.mouse.get_pos()
+    mousePressed = pg.mouse.get_pressed()[0]
+
     # Update Classes
 
-    particle.update(cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), deltaTime, handler.cps)
-    golden.update(deltaTime, pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-    handler.update(5, 10, cookie.checkCookiePressed(pg.mouse.get_pos(), pg.mouse.get_pressed()[0]), golden.active,
+    particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
+    golden.update(deltaTime, mousePos, mousePressed)
+    handler.update(5, 10, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
                    golden.cookieEffect)
-    cookie.update(pg.mouse.get_pos(), pg.mouse.get_pressed()[0])
-    shop.update(deltaTime)
+    cookie.update(mousePos, mousePressed)
+    shop.update(deltaTime, mousePos, mousePressed)
 
     updateParameters(handler.cookies, deltaTime)
 
@@ -143,6 +146,7 @@ while running:
         if event.type == pg.QUIT:
             disconectRPC()
             handler.quit()
+            pg.quit()
             sys.exit()
 
     if pg.key.get_pressed()[pg.K_ESCAPE] == 1:

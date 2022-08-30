@@ -1,7 +1,6 @@
 from pypresence import Presence
 from time import time
 from utils import numberize
-import threading
 
 # Init
 start = int(time())
@@ -24,7 +23,6 @@ def updateParameters(cookie, deltaTime):
     if Time >= updateRPCtime:
         Time = 0
         updateRPC()
-    print(Time)
 
 
 def disconectRPC():
