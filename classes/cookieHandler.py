@@ -1,4 +1,5 @@
 import threading
+from math import ceil
 from random import randint
 from utils import resource_path
 from sounds.soundManager import playSound
@@ -52,7 +53,7 @@ class CookieHandler:
 
         # Cheat Engine detection
 
-        if self.cheatCookies - self.randOffset != self.cookies:
+        if ceil(self.cheatCookies) - self.randOffset != ceil(self.cookies):
             self.cookies = 0
 
     def updateCookies(self):
@@ -67,9 +68,13 @@ class CookieHandler:
         # Add Cps Variable every Second
 
         if self.running:
-            threading.Timer(1.0, self.updateCookies).start()
             self.cookies += self.tempCps
             self.cheatCookies += self.tempCps
+
+            self.cookies = round(self.cookies, 1)
+            self.cheatCookies = round(self.cheatCookies, 1)
+
+            threading.Timer(1.0, self.updateCookies).start()
 
     def quit(self):
 
