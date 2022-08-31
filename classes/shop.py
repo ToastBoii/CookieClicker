@@ -35,7 +35,7 @@ class Shop:
         self.shopMenuRect = self.shopMenu[0].get_rect()
         self.shopMenuRect.topleft = (self.X, 30)
 
-        self.shopBase = pg.image.load(resource_path("textures/shop/shop1.png"))
+        self.shopBase = pg.image.load(resource_path("textures/shop/shop.png"))
 
         self.shopImage = pg.transform.scale(self.shopBase, (210, pg.display.get_surface().get_size()[1]))
         self.shopImage.convert()
