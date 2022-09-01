@@ -3,13 +3,18 @@ from time import time
 from utils import numberize
 
 # Init
-start = int(time())
-client_id = "1014075598567641129"
-RPC = Presence(client_id)
-RPC.connect()
-updateRPCtime = 30  # How often it updates the labels
-Time = updateRPCtime
-cookies = 0
+try:
+    start = int(time())
+    client_id = "1014075598567641129"
+    RPC = Presence(client_id)
+    RPC.connect()
+    updateRPCtime = 30  # How often it updates the labels
+    Time = updateRPCtime
+    cookies = 0
+
+    working = True
+except:
+    working = False
 
 
 # Functions
@@ -17,16 +22,18 @@ cookies = 0
 
 def updateParameters(cookie, deltaTime):
     global cookies, Time, updateRPCtime
-    cookies = cookie
-    Time += deltaTime
+    if working:
+        cookies = cookie
+        Time += deltaTime
 
-    if Time >= updateRPCtime:
-        Time = 0
-        updateRPC()
+        if Time >= updateRPCtime:
+            Time = 0
+            updateRPC()
 
 
 def disconectRPC():
-    RPC.close()
+    if working:
+        RPC.close()
 
 
 def updateRPC():
