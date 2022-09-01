@@ -49,7 +49,7 @@ shop = Shop(screen)
 # Textures
 
 bg = pg.image.load(resource_path("textures/bg.png"))
-bg = pg.transform.scale(bg, (64, 64))
+bg = pg.transform.scale(bg, (screen.get_width(), screen.get_height()))
 bg.convert()
 
 vignette = pg.image.load(resource_path("textures/vignette.png"))
@@ -73,9 +73,7 @@ def render():
 
     # Cover Background in Texture
 
-    for x, y in product(range(0, screen.get_width() + 1, bg.get_rect().width),
-                        range(0, screen.get_height() + 1, bg.get_rect().height)):
-        screen.blit(bg, (x, y))
+    screen.blit(bg, (0, 0))
 
     if not golden.active:
         screen.blit(vignette, (0, 0))
@@ -169,6 +167,7 @@ while running:
 
     pg.display.flip()
     Clock.tick(FPS)
+    print(Clock.get_fps())
 
 # Shut down Game
 

@@ -31,7 +31,7 @@ class Shop:
 
         self.X = 30
 
-        self.openedX = 240
+        self.openedX = 330 # 240
         self.closedX = 30
 
         self.shopMenuImages = []
@@ -48,7 +48,7 @@ class Shop:
 
         self.shopBase = pg.image.load(resource_path("textures/shop/shop.png"))
 
-        self.shopImage = pg.transform.scale(self.shopBase, (210, pg.display.get_surface().get_size()[1]))
+        self.shopImage = pg.transform.scale(self.shopBase, (300, pg.display.get_surface().get_size()[1]))
         self.shopImage.convert()
 
         self.shopRect = self.shopImage.get_rect()
@@ -108,13 +108,14 @@ class Shop:
             self.screen.blit(self.itemImages[i], itemRect)
 
             # Text
-            name = self.fontSmall.render(self.itemNames[i], False, (255, 255, 255))
-            cps = self.fontSmall.render("CPS: " + str(self.cpsPerItem[i]), False, (255, 255, 255))
+            if self.X != 30:
+                name = self.fontSmall.render(self.itemNames[i], False, (255, 255, 255))
+                cps = self.fontSmall.render("CPS: " + str(self.cpsPerItem[i]), False, (255, 255, 255))
 
-            nameRect = name.get_rect()
-            cpsRect = cps.get_rect()
-            nameRect.topleft = (self.shopRect.topleft[0] + 65, 10 + 60 * i)
-            cpsRect.topleft = (self.shopRect.topleft[0] + 65, 30 + 60 * i)
+                nameRect = name.get_rect()
+                cpsRect = cps.get_rect()
+                nameRect.topleft = (self.shopRect.topleft[0] + 65, 10 + 60 * i)
+                cpsRect.topleft = (self.shopRect.topleft[0] + 65, 30 + 60 * i)
 
-            self.screen.blit(name, nameRect)
-            self.screen.blit(cps, cpsRect)
+                self.screen.blit(name, nameRect)
+                self.screen.blit(cps, cpsRect)
