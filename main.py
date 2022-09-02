@@ -113,7 +113,7 @@ def update():
     shop.update(deltaTime, mousePos, mousePressed)
     particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
     golden.update(deltaTime, mousePos, mousePressed)
-    handler.update(0.1, 10, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
+    handler.update(shop.cpsFromItems, 10, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
                    golden.cookieEffect)
     cookie.update(mousePos, mousePressed)
 
