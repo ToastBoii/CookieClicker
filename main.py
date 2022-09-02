@@ -1,7 +1,6 @@
 # Import
 
 import pygame as pg
-from itertools import product
 import sys
 
 from utils import resource_path
@@ -31,7 +30,7 @@ running = True
 # Setup Variables
 
 FPS = 60
-Clock = pg.time.Clock()
+clock = pg.time.Clock()
 
 quitTimer = 3
 
@@ -50,19 +49,15 @@ shop = Shop(screen)
 
 bg = pg.image.load(resource_path("textures/bg.png"))
 bg = pg.transform.scale(bg, (screen.get_width(), screen.get_height()))
-bg.convert()
+bg.convert_alpha()
 
-vignette = pg.image.load(resource_path("textures/vignette.png"))
-vignette = pg.transform.scale(vignette, (screen.get_width(), screen.get_height()))
-vignette.convert_alpha()
-
-goldenVignette = pg.image.load(resource_path("textures/goldenCookies/goldenVignette.png"))
-goldenVignette = pg.transform.scale(goldenVignette, (screen.get_width(), screen.get_height()))
-goldenVignette.convert_alpha()
+goldenBg = pg.image.load(resource_path("textures/goldenCookies/goldenBg.png"))
+goldenBg = pg.transform.scale(goldenBg, (screen.get_width(), screen.get_height()))
+goldenBg.convert_alpha()
 
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
 
-
+framer = 1
 # Game Loop
 
 
@@ -73,12 +68,10 @@ def render():
 
     # Cover Background in Texture
 
-    screen.blit(bg, (0, 0))
-
     if not golden.active:
-        screen.blit(vignette, (0, 0))
+        screen.blit(bg, (0, 0))
     else:
-        screen.blit(goldenVignette, (0, 0))
+        screen.blit(goldenBg, (0, 0))
 
     # Render Classes
 
@@ -166,8 +159,10 @@ while running:
     # End Frame
 
     pg.display.flip()
-    Clock.tick(FPS)
-    print(Clock.get_fps())
+    clock.tick(FPS)
+    framer += 1
+    if framer % 50 == 0:
+        print(clock.get_fps())
 
 # Shut down Game
 
