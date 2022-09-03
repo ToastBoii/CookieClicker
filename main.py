@@ -49,11 +49,11 @@ shop = Shop(screen)
 
 bg = pg.image.load(resource_path("textures/bg.png"))
 bg = pg.transform.scale(bg, (screen.get_width(), screen.get_height()))
-bg.convert_alpha()
+bg.convert()
 
 goldenBg = pg.image.load(resource_path("textures/goldenCookies/goldenBg.png"))
 goldenBg = pg.transform.scale(goldenBg, (screen.get_width(), screen.get_height()))
-goldenBg.convert_alpha()
+goldenBg.convert()
 
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
 
@@ -68,10 +68,13 @@ def render():
 
     # Cover Background in Texture
 
-    if not golden.active:
-        screen.blit(bg, (0, 0))
-    else:
-        screen.blit(goldenBg, (0, 0))
+    for i in range(120):
+        if i%2 == 0:
+            color = (91, 110, 225)
+        else:
+            color = (99, 155, 255)
+
+        pg.draw.rect(screen, color, pg.Rect(screen.get_width() / 120 * i, 0, screen.get_width() / 120, screen.get_height()))
 
     # Render Classes
 
@@ -82,7 +85,7 @@ def render():
 
     shop.render()
 
-    frame.render(golden.active, golden.cookieEffect)
+    frame.render(golden.active, golden.cookieEffect, golden.timer)
     golden.render()
 
     # Render Quitting Animation
