@@ -110,10 +110,15 @@ def update():
 
     # Update Classes
 
-    shop.update(deltaTime, mousePos, mousePressed)
+    shop.update(deltaTime, mousePos, mousePressed, handler.cookies)
+    if shop.debt != 0:
+        handler.cookies -= shop.debt
+        handler.cheatCookies -= shop.debt
+        shop.debt = 0
+
     particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
     golden.update(deltaTime, mousePos, mousePressed)
-    handler.update(shop.cpsFromItems, 10, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
+    handler.update(shop.cpsFromItems, 1, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
                    golden.cookieEffect)
     cookie.update(mousePos, mousePressed)
 
