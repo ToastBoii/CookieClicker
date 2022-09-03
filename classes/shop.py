@@ -1,6 +1,6 @@
 import pygame as pg
+from sounds.soundManager import playSound
 from utils import resource_path, step, numberize
-
 
 class Shop:
     def __init__(self, screen):
@@ -28,6 +28,7 @@ class Shop:
         self.opened = False
 
         self.oldPressed = False
+        self.oldPressed2 = -1
         self.menuAnimation = 0
 
         self.X = 30
@@ -75,10 +76,14 @@ class Shop:
 
         if self.shopMenuRect.collidepoint(mousePos) and mouseClicked:
             if not self.oldPressed:
+                playSound(resource_path("sounds/click.wav"))
                 self.opened = not self.opened
                 self.oldPressed = True
         else:
-            self.oldPressed = False
+            if not mouseClicked:
+                if self.oldPressed:
+                    playSound(resource_path("sounds/unclick.wav"))
+                self.oldPressed = False
 
         if self.opened:
             if self.menuAnimation < 6:
@@ -86,14 +91,14 @@ class Shop:
             if self.menuAnimation > 6:
                 self.menuAnimation = 6
 
-            self.X = step(self.X, self.openedX, 20)
+            self.X = step(self.X, self.openedX, deltaTime * 500)
         else:
             if self.menuAnimation > 0:
                 self.menuAnimation -= deltaTime * 12
                 if self.menuAnimation < 0:
                     self.menuAnimation = 0
 
-            self.X = step(self.X, self.closedX, 20)
+            self.X = step(self.X, self.closedX,  deltaTime * 500)
 
         # Calculate Price of Items
 
@@ -116,10 +121,21 @@ class Shop:
                             self.debt += self.calcItemPrice[i]
 
                     self.shopBgState[i] = 2
+                    if self.oldPressed2 == -1:
+                        playSound(resource_path("sounds/click.wav"))
+                        self.oldPressed2 = i
                 else:
+                    if self.oldPressed2 == i:
+                        self.oldPressed2 = -1
+                        playSound(resource_path("sounds/unclick.wav"))
+
                     self.shopBgPressed[i] = 0
                     self.shopBgState[i] = 1
             else:
+                if self.oldPressed2 == i:
+                    self.oldPressed2 = -1
+                    playSound(resource_path("sounds/unclick.wav"))
+
                 self.shopBgPressed[i] = 0
                 self.shopBgState[i] = 0
 
