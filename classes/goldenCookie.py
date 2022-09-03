@@ -102,7 +102,7 @@ class GoldenCookie:
         # Effect Duration
 
         if self.active:
-            self.timer *= deltaTime
+            self.timer -= deltaTime
 
             if self.timer <= 0:
                 self.active = False
