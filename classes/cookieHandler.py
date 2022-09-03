@@ -56,14 +56,14 @@ class CookieHandler:
         if ceil(self.cheatCookies) - self.randOffset != ceil(self.cookies):
             self.cookies = 0
 
-    def updateCookies(self):
-
         # Check if first Golden Cookie Effect is active
 
         if self.active and self.cookieEffect == 0:
             self.tempCps = self.cps * 8
         else:
             self.tempCps = self.cps
+
+    def updateCookies(self):
 
         # Add Cps Variable every Second
 

@@ -5,10 +5,10 @@ block_cipher = None
 
 
 a = Analysis(
-    ['C:/Users/Michael/PycharmProjects/CookieClicker/main.py'],
+    ['C:/Users/hanne/PycharmProjects/CookieClicker/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:/Users/Michael/PycharmProjects/CookieClicker/textures', 'textures/'), ('C:/Users/Michael/PycharmProjects/CookieClicker/classes', 'classes/')],
+    datas=[('C:/Users/hanne/PycharmProjects/CookieClicker/sounds', 'sounds/'), ('C:/Users/hanne/PycharmProjects/CookieClicker/textures', 'textures/'), ('C:/Users/hanne/PycharmProjects/CookieClicker/classes', 'classes/'), ('C:/Users/hanne/PycharmProjects/CookieClicker/utils.py', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -41,5 +41,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='C:\\Users\\Michael\\PycharmProjects\\CookieClicker\\textures\\icon\\icon.ico',
+    icon='C:\\Users\\hanne\\PycharmProjects\\CookieClicker\\textures\\icon\\icon.ico',
 )

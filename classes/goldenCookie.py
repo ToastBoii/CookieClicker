@@ -22,6 +22,7 @@ class GoldenCookie:
         self.active = False
         self.cookieEffect = 0
         self.thread = None
+        self.timer = 20
 
         self.scale = 23
 
@@ -85,8 +86,7 @@ class GoldenCookie:
                                      self.goldenCookie.get_height() * 2)
                 self.visible = False
                 self.cookieEffect = randint(0, 1)  # Change after adding another Effect
-                self.thread = threading.Thread(target=self.effectCountdown)
-                self.thread.start()
+                self.active = True
         else:
             self.scale = step(self.scale, self.scaleIdle, 0.8)
 
@@ -99,10 +99,14 @@ class GoldenCookie:
 
         self.cookieRotated = pg.transform.rotate(self.goldenCookie, self.angle)
 
-    def effectCountdown(self):
-        self.active = True
-        sleep(20)
-        self.active = False
+        # Effect Duration
+
+        if self.active:
+            self.timer *= deltaTime
+
+            if self.timer <= 0:
+                self.active = False
+                self.timer = 20
 
     def render(self):
         if self.visible:

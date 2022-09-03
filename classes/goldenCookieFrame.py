@@ -7,6 +7,7 @@ class GoldenCookieFrame:
         self.screen = screen
 
         self.framePaths = ["textures/goldenCookies/frenzy.png", "textures/goldenCookies/clickBoost.png"]
+        self.frame = pg.image.load(resource_path("textures/goldenCookies/frame.png"))
 
     def render(self, active, cookieEffect):
         if active:
@@ -21,4 +22,12 @@ class GoldenCookieFrame:
             imageRect = image.get_rect()
             imageRect.topright = (pg.display.get_surface().get_width() - 10, 10)
 
+            self.frame = pg.transform.scale(self.frame, (
+                int(pg.display.get_surface().get_width() / 20),
+                int(pg.display.get_surface().get_width() / 20)))
+
+            frameRect = self.frame.get_rect()
+            frameRect.topright = (pg.display.get_surface().get_width() - 10, 10)
+
             self.screen.blit(image, imageRect)
+            self.screen.blit(self.frame, frameRect)
