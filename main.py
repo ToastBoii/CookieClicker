@@ -47,14 +47,6 @@ shop = Shop(screen)
 
 # Textures
 
-bg = pg.image.load(resource_path("textures/bg.png"))
-bg = pg.transform.scale(bg, (screen.get_width(), screen.get_height()))
-bg.convert()
-
-goldenBg = pg.image.load(resource_path("textures/goldenCookies/goldenBg.png"))
-goldenBg = pg.transform.scale(goldenBg, (screen.get_width(), screen.get_height()))
-goldenBg.convert()
-
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
 
 framer = 1
