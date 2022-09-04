@@ -14,8 +14,9 @@ from classes.cookieParticle import CookieParticle
 from classes.cookieDisplay import CookieDisplay
 from classes.cookieHandler import CookieHandler
 
-# Shop
+# Side Menus
 from classes.shop import Shop
+from classes.settings import Settings
 
 # Setup Window
 
@@ -44,6 +45,7 @@ handler = CookieHandler()
 frame = GoldenCookieFrame(screen)
 
 shop = Shop(screen)
+setting = Settings(screen)
 
 # Textures
 
@@ -76,6 +78,7 @@ def render():
     cookie.render()
 
     shop.render()
+    setting.render()
 
     frame.render(golden.active, golden.cookieEffect, golden.timer)
     golden.render()
@@ -104,6 +107,13 @@ def update():
     mousePressed = pg.mouse.get_pressed()[0]
 
     # Update Classes
+
+    setting.update(deltaTime, mousePos, mousePressed, handler.cookies, shop.boughtItems)
+    if setting.load:
+        handler.cookies = setting.loadedCookies
+        handler.cheatCookies = setting.loadedCookies + handler.randOffset
+        shop.boughtItems = setting.loadedBoughtItems
+        setting.load = False
 
     shop.update(deltaTime, mousePos, mousePressed, handler.cookies)
     if shop.debt != 0:

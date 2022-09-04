@@ -153,15 +153,16 @@ class Shop:
         self.shopMenuRect.topleft = (self.X, 30)
         self.screen.blit(self.shopMenu[round(self.menuAnimation)], self.shopMenuRect)
 
-        # Menu
+        if self.X != 30:
 
-        self.shopRect.topright = (self.X - 30, 0)
-        self.screen.blit(self.shopImage, self.shopRect)
+            # Menu
 
-        # Shop Items
+            self.shopRect.topright = (self.X - 30, 0)
+            self.screen.blit(self.shopImage, self.shopRect)
 
-        for i in range(len(self.itemImages)):
-            if self.X != 30:
+            # Shop Items
+
+            for i in range(len(self.itemImages)):
                 # Images
                 bgRect = self.shopBg[0].get_rect()
                 bgRect.topleft = (self.shopRect.topleft[0] + 5, 5 + 60 * i)

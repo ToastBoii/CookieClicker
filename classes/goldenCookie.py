@@ -14,7 +14,7 @@ class GoldenCookie:
         self.angle = 0
         self.angleTemp = 0
         self.minWaitTime = 50
-        self.maxWaitTime = 150
+        self.maxWaitTime = 500
         self.waitTime = randint(self.minWaitTime, self.maxWaitTime)
         self.hideTime = 5
         self.visible = False
