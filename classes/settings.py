@@ -1,6 +1,7 @@
 import pygame as pg
 from utils import resource_path, step
 from sounds.soundManager import playSound
+from base64 import b64decode, b64encode, encode, decode
 
 
 class Settings:
@@ -82,13 +83,20 @@ class Settings:
                         self.shopBgPressed[i] = 1
 
                         if i == 0:
-                            file = open("save.cc", 'w')
-                            file.write(str(cookies) + ";" + str(boughtItems))
+                            file = open("save.cc", 'wb')
+
+                            saveString = str(cookies) + ";" + str(boughtItems)
+                            encodedString = b64encode(saveString.encode('ascii'))
+                            print(encodedString)
+                            file.write(encodedString)
                             file.close()
                         elif i == 1:
-                            file = open("save.cc", 'r')
+                            file = open("save.cc", 'rb')
 
-                            objects = file.read().split(";")
+                            encStr = file.read()
+                            byteStr = b64decode(encStr)
+
+                            objects = byteStr.decode().split(";")
 
                             self.loadedCookies = float(objects[0])
 
