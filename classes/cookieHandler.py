@@ -45,7 +45,7 @@ class CookieHandler:
             playSound(resource_path("sounds/click.wav"))
             self.pressed = True
             self.cookies += tempCookies
-            self.cheatCookies += tempCookies
+            self.cheatCookies = self.cookies + self.randOffset
         elif not cookiePressed:
             if self.pressed:
                 playSound(resource_path("sounds/unclick.wav"))
@@ -69,10 +69,9 @@ class CookieHandler:
 
         if self.running:
             self.cookies += self.tempCps
-            self.cheatCookies += self.tempCps
-
             self.cookies = round(self.cookies, 1)
-            self.cheatCookies = round(self.cheatCookies, 1)
+
+            self.cheatCookies = self.cookies + self.randOffset
 
             threading.Timer(1.0, self.updateCookies).start()
 

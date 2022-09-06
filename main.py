@@ -63,12 +63,13 @@ def render():
     # Cover Background in Texture
 
     for i in range(120):
-        if i%2 == 0:
+        if i % 2 == 0:
             color = (91, 110, 225)
         else:
             color = (99, 155, 255)
 
-        pg.draw.rect(screen, color, pg.Rect(screen.get_width() / 120 * i, 0, screen.get_width() / 120, screen.get_height()))
+        pg.draw.rect(screen, color, pg.Rect(screen.get_width() / 120 * i, 0, screen.get_width() / 120,
+                                            screen.get_height()))
 
     # Render Classes
 
@@ -143,12 +144,16 @@ while running:
 
     # Events
 
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
+    for e in pg.event.get():
+        if e.type == pg.QUIT:
             disconectRPC()
             handler.quit()
             pg.quit()
             sys.exit()
+        """if e.type == pg.MOUSEWHEEL:
+            if not shop.opened:
+                break
+            shop.scrollOffset += e.y * 2000 * deltaTime"""
 
     if pg.key.get_pressed()[pg.K_ESCAPE] == 1:
         quitTimer -= deltaTime

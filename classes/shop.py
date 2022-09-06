@@ -2,23 +2,36 @@ import pygame as pg
 from sounds.soundManager import playSound
 from utils import resource_path, step, numberize
 
+
 class Shop:
     def __init__(self, screen):
         self.screen = screen
 
-        self.boughtItems = [0, 0, 0, 0]
-        self.itemPrice = [10, 100, 1000, 15000]
-        self.cpsPerItem = [0.1, 1, 7, 45]
+        self.itemPrice = [15, 100, 1100, 12000, 130000, 1400000, 20000000, 330000000, 5100000000, 75000000000,
+                          1000000000000, 14000000000000, 170000000000000]
+        self.cpsPerItem = [0.1, 1, 8, 47, 260, 1400, 7800, 44000, 260000, 1600000, 10000000, 65000000, 430000000]
 
-        self.calcItemPrice = [10, 100, 1000, 15000]
+        self.itemNames = ["AutoClicker", "Cook", "Cookie Seeds", "Crystal Cookies", "Assembly Line", "Cookie Economy",
+                          "Cookie Church", "Cult Ritual", "Interstellar Planets", "Potion Lab", "Cookie Antimatter",
+                          "Matrix Code", "Infinity"]
 
-        self.itemNames = ["AutoClicker", "Cook", "Farm", "Mine"]
+        self.shopBgState = []
+        self.shopBgPressed = []
+        self.boughtItems = []
+        self.calcItemPrice = []
+
         self.itemImages = []
 
         for i in range(len(self.itemNames)):
             self.itemImages.append(pg.image.load(resource_path("textures/shop/itemIcons/item" + str(i + 1) + ".png")))
             self.itemImages[i] = pg.transform.scale(self.itemImages[i], (48, 48))
             self.itemImages[i].convert()
+
+            self.shopBgState.append(0)
+            self.shopBgPressed.append(0)
+            self.boughtItems.append(0)
+            self.calcItemPrice.append(self.itemPrice[i])
+        print(self.shopBgPressed)
 
         self.fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
         self.fontBig = pg.font.Font(resource_path("textures/font/retro.ttf"), 32)
@@ -33,8 +46,10 @@ class Shop:
 
         self.X = 30
 
-        self.openedX = 330  # 240
+        self.openedX = 330
         self.closedX = 30
+
+        self.scrollOffset = 0
 
         self.shopBg = []
 
@@ -45,9 +60,6 @@ class Shop:
         for i in range(3):
             self.shopBg[i] = pg.transform.scale(self.shopBg[i], (270, 58))
             self.shopBg[i].convert()
-
-        self.shopBgState = [0, 0, 0, 0]
-        self.shopBgPressed = [0, 0, 0, 0]
 
         self.debt = 0
 
@@ -98,7 +110,7 @@ class Shop:
                 if self.menuAnimation < 0:
                     self.menuAnimation = 0
 
-            self.X = step(self.X, self.closedX,  deltaTime * 500)
+            self.X = step(self.X, self.closedX, deltaTime * 500)
 
         # Calculate Price of Items
 
@@ -139,6 +151,10 @@ class Shop:
                 self.shopBgPressed[i] = 0
                 self.shopBgState[i] = 0
 
+        # Limit scrolling
+
+        self.scrollOffset = max(-1000, min(0, self.scrollOffset))
+
         # Calculate Cps gained from bought items
 
         self.cpsFromItems = 0
@@ -165,17 +181,17 @@ class Shop:
             for i in range(len(self.itemImages)):
                 # Images
                 bgRect = self.shopBg[0].get_rect()
-                bgRect.topleft = (self.shopRect.topleft[0] + 5, 5 + 60 * i)
+                bgRect.topleft = (self.shopRect.topleft[0] + 5, 5 + 60 * i + self.scrollOffset)
 
                 itemRect = self.itemImages[i].get_rect()
-                itemRect.topleft = (self.shopRect.topleft[0] + 10, 10 + 60 * i)
+                itemRect.topleft = (self.shopRect.topleft[0] + 10, 10 + 60 * i + self.scrollOffset)
 
                 self.screen.blit(self.shopBg[self.shopBgState[i]], bgRect)
                 self.screen.blit(self.itemImages[i], itemRect)
 
                 # Text
                 name = self.fontSmall.render(self.itemNames[i], False, (255, 255, 255))
-                cps = self.fontSmall.render("CPS: " + str(self.cpsPerItem[i]), False, (255, 255, 255))
+                cps = self.fontSmall.render("CPS: " + numberize(self.cpsPerItem[i]), False, (255, 255, 255))
                 cost = self.fontSmall.render(numberize(self.calcItemPrice[i]) + " Cookies", False, (255, 255, 255))
                 count = self.fontBig.render(str(self.boughtItems[i]), False, (255, 255, 255))
 
@@ -183,10 +199,10 @@ class Shop:
                 cpsRect = cps.get_rect()
                 costRect = cost.get_rect()
                 countRect = count.get_rect()
-                nameRect.topleft = (self.shopRect.topleft[0] + 65, 10 + 60 * i)
-                cpsRect.topleft = (self.shopRect.topleft[0] + 65, 25 + 60 * i)
-                costRect.topleft = (self.shopRect.topleft[0] + 65, 40 + 60 * i)
-                countRect.topright = (self.shopRect.topright[0] - 30, 15 + 60 * i)
+                nameRect.topleft = (self.shopRect.topleft[0] + 65, 10 + 60 * i + self.scrollOffset)
+                cpsRect.topleft = (self.shopRect.topleft[0] + 65, 25 + 60 * i + self.scrollOffset)
+                costRect.topleft = (self.shopRect.topleft[0] + 65, 40 + 60 * i + self.scrollOffset)
+                countRect.topright = (self.shopRect.topright[0] - 30, 15 + 60 * i + self.scrollOffset)
 
                 self.screen.blit(name, nameRect)
                 self.screen.blit(cps, cpsRect)
