@@ -45,12 +45,16 @@ class Settings:
             self.shopBg[i] = pg.transform.scale(self.shopBg[i], (270, 58))
             self.shopBg[i].convert()
 
-        self.shopBgState = [0, 0]
-        self.shopBgPressed = [0, 0]
+        self.shopBgState = [0, 0, 0, 0]
+        self.shopBgPressed = [0, 0, 0, 0]
 
         self.loadedCookies = 0
         self.loadedBoughtItems = []
         self.load = False
+
+        self.resetReminder = 0
+
+        self.quit = False
 
     def update(self, deltaTime, mousePos, mouseClicked, cookies, boughtItems):
         # Shop open and close animation
@@ -75,7 +79,13 @@ class Settings:
 
         for i in range(len(self.shopBgState)):
             buttonRect = self.shopBg[0].get_rect()
-            buttonRect.topright = (self.X + 330 - 5, 5 + 60 * i)
+
+            if i <= 1:
+                buttonRect.topright = (self.X + 330 - 5, 5 + 60 * i)
+            elif i == 2:
+                buttonRect.topright = (self.X + 330 - 5, pg.display.get_surface().get_size()[1] - (5 + 60 * i))
+            elif i == 3:
+                buttonRect.topright = (self.X + 330 - 5, pg.display.get_surface().get_size()[1] - (5 + 60 * (i - 2)))
 
             if buttonRect.collidepoint(mousePos):
                 if mouseClicked:
@@ -87,7 +97,7 @@ class Settings:
 
                             saveString = str(cookies) + ";" + str(boughtItems)
                             encodedString = b64encode(saveString.encode('ascii'))
-                            print(encodedString)
+
                             file.write(encodedString)
                             file.close()
                         elif i == 1:
@@ -115,6 +125,20 @@ class Settings:
                             self.load = True
 
                             file.close()
+                        elif i == 2 and self.resetReminder == 0:
+                            self.resetReminder = 1
+                        elif i == 2 and self.resetReminder == 1:
+                            self.resetReminder = 0
+                            self.loadedBoughtItems = []
+
+                            for j in range(len(boughtItems)):
+                                self.loadedBoughtItems.append(0)
+
+                            self.loadedCookies = 0
+
+                            self.load = True
+                        elif i == 3:
+                            self.quit = True
 
                     self.shopBgState[i] = 2
                     if self.oldPressed2 == -1:
@@ -153,7 +177,14 @@ class Settings:
                 # Buttons
 
                 buttonRect = self.shopBg[0].get_rect()
-                buttonRect.topright = (self.X + 330 - 5, 5 + 60 * i)
+
+                if i <= 1:
+                    buttonRect.topright = (self.X + 330 - 5, 5 + 60 * i)
+                elif i == 2:
+                    buttonRect.topright = (self.X + 330 - 5, pg.display.get_surface().get_size()[1] - (5 + 60 * i))
+                elif i == 3:
+                    buttonRect.topright = (self.X + 330 - 5, pg.display.get_surface().get_size()[1] - (5 + 60 * (i - 2))
+                                           )
 
                 self.screen.blit(self.shopBg[self.shopBgState[i]], buttonRect)
 
@@ -164,8 +195,22 @@ class Settings:
                     text = self.fontBig.render("Save", False, (255, 255, 255))
                 elif i == 1:
                     text = self.fontBig.render("Load", False, (255, 255, 255))
+                elif i == 2 and self.resetReminder == 0:
+                    text = self.fontBig.render("RESET", False, (255, 0, 0))
+                elif i == 2 and self.resetReminder == 1:
+                    text = self.fontBig.render("REALLY?", False, (255, 0, 0))
+                elif i == 3:
+                    text = self.fontBig.render("Quit", False, (255, 255, 255))
 
                 textRect = text.get_rect()
-                textRect.topright = (self.X + 330 - buttonRect.width / 2 + textRect.width / 2, 15 + 60 * i)
+
+                if i <= 1:
+                    textRect.topright = (self.X + 330 - buttonRect.width / 2 + textRect.width / 2, 15 + 60 * i)
+                elif i == 2:
+                    textRect.topright = (self.X + 330 - buttonRect.width / 2 + textRect.width / 2,
+                                         pg.display.get_surface().get_size()[1] - ((60 - 3) * i))
+                elif i == 3:
+                    textRect.topright = (self.X + 330 - buttonRect.width / 2 + textRect.width / 2,
+                                         pg.display.get_surface().get_size()[1] - ((60 - 4) * (i - 2)))
 
                 self.screen.blit(text, textRect)

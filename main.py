@@ -104,6 +104,7 @@ def render():
 
 
 def update():
+    global running
     mousePos = pg.mouse.get_pos()
     mousePressed = pg.mouse.get_pressed()[0]
 
@@ -113,8 +114,11 @@ def update():
     if setting.load:
         handler.cookies = setting.loadedCookies
         handler.cheatCookies = setting.loadedCookies + handler.randOffset
-        shop.boughtItems = setting.loadedBoughtItems
+        for i in range(len(shop.boughtItems)):
+            shop.boughtItems[i] = setting.loadedBoughtItems[i]
         setting.load = False
+    if setting.quit:
+        running = False
 
     shop.update(deltaTime, mousePos, mousePressed, handler.cookies)
     if shop.debt != 0:

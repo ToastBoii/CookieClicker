@@ -31,7 +31,6 @@ class Shop:
             self.shopBgPressed.append(0)
             self.boughtItems.append(0)
             self.calcItemPrice.append(self.itemPrice[i])
-        print(self.shopBgPressed)
 
         self.fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
         self.fontBig = pg.font.Font(resource_path("textures/font/retro.ttf"), 32)
