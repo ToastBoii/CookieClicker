@@ -138,6 +138,14 @@ class Settings:
 
                             self.load = True
                         elif i == 3:
+                            file = open("backup.cc", 'wb')
+
+                            saveString = str(cookies) + ";" + str(boughtItems)
+                            encodedString = b64encode(saveString.encode('ascii'))
+
+                            file.write(encodedString)
+                            file.close()
+
                             self.quit = True
 
                     self.shopBgState[i] = 2

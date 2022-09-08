@@ -33,8 +33,6 @@ running = True
 FPS = 60
 clock = pg.time.Clock()
 
-quitTimer = 3
-
 # Setup Classes
 
 cookie = Cookie(screen)
@@ -83,24 +81,6 @@ def render():
 
     frame.render(golden.active, golden.cookieEffect, golden.timer)
     golden.render()
-
-    # Render Quitting Animation
-
-    if quitTimer <= 1:
-        text = fontSmall.render("Quitting...", False, (255, 255, 255))
-        textRect = text.get_rect()
-        textRect.topleft = (5, 5)
-        screen.blit(text, textRect)
-    elif quitTimer <= 2:
-        text = fontSmall.render("Quitting..", False, (255, 255, 255))
-        textRect = text.get_rect()
-        textRect.topleft = (5, 5)
-        screen.blit(text, textRect)
-    elif quitTimer < 3:
-        text = fontSmall.render("Quitting.", False, (255, 255, 255))
-        textRect = text.get_rect()
-        textRect.topleft = (5, 5)
-        screen.blit(text, textRect)
 
 
 def update():
@@ -160,12 +140,7 @@ while running:
             shop.scrollOffset += e.y * 2000 * deltaTime"""
 
     if pg.key.get_pressed()[pg.K_ESCAPE] == 1:
-        quitTimer -= deltaTime
-
-        if quitTimer <= 3:  # Change to 0 when building
-            running = False
-    else:
-        quitTimer = 3
+        running = False
 
     # Update Game Elements
 
