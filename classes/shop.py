@@ -19,14 +19,16 @@ class Shop:
         self.shopBgPressed = []
         self.boughtItems = []
         self.calcItemPrice = []
+        self.discoveredItems = 0
 
         self.itemImages = []
 
-        for i in range(len(self.itemNames)):
-            self.itemImages.append(pg.image.load(resource_path("textures/shop/itemIcons/item" + str(i + 1) + ".png")))
+        for i in range(len(self.itemNames) + 1):
+            self.itemImages.append(pg.image.load(resource_path("textures/shop/itemIcons/item" + str(i) + ".png")))
             self.itemImages[i] = pg.transform.scale(self.itemImages[i], (48, 48))
             self.itemImages[i].convert()
 
+        for i in range(len(self.itemNames)):
             self.shopBgState.append(0)
             self.shopBgPressed.append(0)
             self.boughtItems.append(0)
@@ -123,32 +125,33 @@ class Shop:
             buttonRect = self.shopBg[0].get_rect()
             buttonRect.topright = (self.X - 60 + 5, 5 + 60 * i)
 
-            if buttonRect.collidepoint(mousePos):
-                if mouseClicked:
-                    if self.shopBgPressed[i] == 0:
-                        self.shopBgPressed[i] = 1
-                        if cookies >= self.calcItemPrice[i]:
-                            self.boughtItems[i] += 1
-                            self.debt += self.calcItemPrice[i]
+            if i <= self.discoveredItems:
+                if buttonRect.collidepoint(mousePos):
+                    if mouseClicked:
+                        if self.shopBgPressed[i] == 0:
+                            self.shopBgPressed[i] = 1
+                            if cookies >= self.calcItemPrice[i]:
+                                self.boughtItems[i] += 1
+                                self.debt += self.calcItemPrice[i]
 
-                    self.shopBgState[i] = 2
-                    if self.oldPressed2 == -1:
-                        playSound(resource_path("sounds/click.wav"))
-                        self.oldPressed2 = i
+                        self.shopBgState[i] = 2
+                        if self.oldPressed2 == -1:
+                            playSound(resource_path("sounds/click.wav"))
+                            self.oldPressed2 = i
+                    else:
+                        if self.oldPressed2 == i:
+                            self.oldPressed2 = -1
+                            playSound(resource_path("sounds/unclick.wav"))
+
+                        self.shopBgPressed[i] = 0
+                        self.shopBgState[i] = 1
                 else:
                     if self.oldPressed2 == i:
                         self.oldPressed2 = -1
                         playSound(resource_path("sounds/unclick.wav"))
 
                     self.shopBgPressed[i] = 0
-                    self.shopBgState[i] = 1
-            else:
-                if self.oldPressed2 == i:
-                    self.oldPressed2 = -1
-                    playSound(resource_path("sounds/unclick.wav"))
-
-                self.shopBgPressed[i] = 0
-                self.shopBgState[i] = 0
+                    self.shopBgState[i] = 0
 
         # Limit scrolling
 
@@ -160,6 +163,12 @@ class Shop:
 
         for i in range(len(self.boughtItems)):
             self.cpsFromItems += self.boughtItems[i] * self.cpsPerItem[i]
+
+        # Update which items ge shown
+
+        for i in range(len(self.itemPrice)):
+            if self.itemPrice[i] <= cookies and self.discoveredItems < i:
+                self.discoveredItems = i
 
     def render(self):
 
@@ -177,7 +186,7 @@ class Shop:
 
             # Shop Items
 
-            for i in range(len(self.itemImages)):
+            for i in range(len(self.itemNames)):
                 # Images
                 bgRect = self.shopBg[0].get_rect()
                 bgRect.topleft = (self.shopRect.topleft[0] + 5, 5 + 60 * i + self.scrollOffset)
@@ -185,19 +194,33 @@ class Shop:
                 itemRect = self.itemImages[i].get_rect()
                 itemRect.topleft = (self.shopRect.topleft[0] + 10, 10 + 60 * i + self.scrollOffset)
 
-                self.screen.blit(self.shopBg[self.shopBgState[i]], bgRect)
-                self.screen.blit(self.itemImages[i], itemRect)
+                if self.discoveredItems >= i:
+                    self.screen.blit(self.shopBg[self.shopBgState[i]], bgRect)
+                    self.screen.blit(self.itemImages[i + 1], itemRect)
+                else:
+                    self.screen.blit(self.shopBg[2], bgRect)
+                    self.screen.blit(self.itemImages[0], itemRect)
 
                 # Text
-                name = self.fontSmall.render(self.itemNames[i], False, (255, 255, 255))
-                cps = self.fontSmall.render("CPS: " + numberize(self.cpsPerItem[i]), False, (255, 255, 255))
-                cost = self.fontSmall.render(numberize(self.calcItemPrice[i]) + " Cookies", False, (255, 255, 255))
-                count = self.fontBig.render(str(self.boughtItems[i]), False, (255, 255, 255))
+                if self.discoveredItems >= i:
+                    name = self.fontSmall.render(self.itemNames[i], False, (255, 255, 255))
+                    cps = self.fontSmall.render("CPS: " + numberize(self.cpsPerItem[i]), False, (255, 255, 255))
+                    cost = self.fontSmall.render(numberize(self.calcItemPrice[i]) + " Cookies", False, (255, 255, 255))
+                    count = self.fontBig.render(str(self.boughtItems[i]), False, (255, 255, 255))
+                else:
+                    name = self.fontSmall.render("???", False, (255, 255, 255))
+                    cps = self.fontSmall.render("CPS: ???", False, (255, 255, 255))
+                    cost = self.fontSmall.render("??? Cookies", False, (255, 255, 255))
+                    count = self.fontBig.render(str(self.boughtItems[i]), False, (255, 255, 255))
+
+                if self.discoveredItems + 1 == i:
+                    cost = self.fontSmall.render(numberize(self.calcItemPrice[i]) + " Cookies", False, (255, 255, 255))
 
                 nameRect = name.get_rect()
                 cpsRect = cps.get_rect()
                 costRect = cost.get_rect()
                 countRect = count.get_rect()
+
                 nameRect.topleft = (self.shopRect.topleft[0] + 65, 10 + 60 * i + self.scrollOffset)
                 cpsRect.topleft = (self.shopRect.topleft[0] + 65, 25 + 60 * i + self.scrollOffset)
                 costRect.topleft = (self.shopRect.topleft[0] + 65, 40 + 60 * i + self.scrollOffset)
@@ -206,4 +229,5 @@ class Shop:
                 self.screen.blit(name, nameRect)
                 self.screen.blit(cps, cpsRect)
                 self.screen.blit(cost, costRect)
-                self.screen.blit(count, countRect)
+                if self.discoveredItems >= i:
+                    self.screen.blit(count, countRect)
