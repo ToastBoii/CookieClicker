@@ -19,7 +19,7 @@ class Shop:
         self.shopBgPressed = []
         self.boughtItems = []
         self.calcItemPrice = []
-        self.discoveredItems = 5
+        self.discoveredItems = 0
 
         self.itemImages = []
 

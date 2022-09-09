@@ -22,6 +22,12 @@ class Cookie:
             int(pg.display.get_surface().get_width() / self.cookieScale)))
         self.cookieImg.convert()
 
+        self.goldenCookieImgBase = pg.image.load(resource_path("textures/goldenCookie.png"))
+        self.goldenCookieImg = pg.transform.scale(self.goldenCookieImgBase, (
+            int(pg.display.get_surface().get_width() / self.cookieScale),
+            int(pg.display.get_surface().get_width() / self.cookieScale)))
+        self.goldenCookieImg.convert()
+
         self.cookieRect = self.cookieImg.get_rect()
         self.cookieRect.center = (int(self.screen.get_width() / 2), int(self.screen.get_height() / 2))
 
@@ -53,21 +59,33 @@ class Cookie:
         else:
             return False
 
-    def render(self, cpc, deltaTime):
+    def render(self, cpc, deltaTime, skin):
 
         # Scale Image
 
-        self.cookieImg = pg.transform.scale(self.cookieImgBase, (
-            int(pg.display.get_surface().get_width() / self.cookieScale),
-            int(pg.display.get_surface().get_width() / self.cookieScale)))
-        self.cookieImg.convert()
+        if skin:
+            self.goldenCookieImg = pg.transform.scale(self.goldenCookieImgBase, (
+                int(pg.display.get_surface().get_width() / self.cookieScale),
+                int(pg.display.get_surface().get_width() / self.cookieScale)))
+            self.goldenCookieImg.convert()
+        else:
+            self.cookieImg = pg.transform.scale(self.cookieImgBase, (
+                int(pg.display.get_surface().get_width() / self.cookieScale),
+                int(pg.display.get_surface().get_width() / self.cookieScale)))
+            self.cookieImg.convert()
 
         # Render and Position Image
+
+        goldenCookieRect = self.goldenCookieImg.get_rect()
+        goldenCookieRect.center = (int(self.screen.get_width() / 2), int(self.screen.get_height() / 2))
 
         self.cookieRect = self.cookieImg.get_rect()
         self.cookieRect.center = (int(self.screen.get_width() / 2), int(self.screen.get_height() / 2))
 
-        self.screen.blit(self.cookieImg, self.cookieRect)
+        if skin:
+            self.screen.blit(self.goldenCookieImg, goldenCookieRect)
+        else:
+            self.screen.blit(self.cookieImg, self.cookieRect)
 
         # Cookies per Click Text
 

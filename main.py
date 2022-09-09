@@ -13,6 +13,7 @@ from classes.goldenCookieFrame import GoldenCookieFrame
 from classes.cookieParticle import CookieParticle
 from classes.cookieDisplay import CookieDisplay
 from classes.cookieHandler import CookieHandler
+from classes.cheatCode import CheatCode
 
 # Side Menus
 from classes.shop import Shop
@@ -45,6 +46,8 @@ frame = GoldenCookieFrame(screen)
 shop = Shop(screen)
 setting = Settings(screen)
 
+cheat = CheatCode()
+
 # Textures
 
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
@@ -76,7 +79,7 @@ def render():
     particle.render(deltaTime)
 
     display.render(handler.cookies, handler.tempCps)
-    cookie.render(handler.cpc, deltaTime)
+    cookie.render(handler.cpc, deltaTime, cheat.active)
 
     shop.render()
     setting.render()
@@ -111,7 +114,7 @@ def update():
     particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
     golden.update(deltaTime, mousePos, mousePressed)
 
-    if shop.cpsFromItems * 0.1 <= 10:
+    if shop.cpsFromItems * 0.1 <= 1:
         handler.update(shop.cpsFromItems, 1, cookie.checkCookiePressed(mousePos, mousePressed),
                        golden.active, golden.cookieEffect)
     else:
@@ -141,6 +144,8 @@ while running:
             handler.quit()
             pg.quit()
             sys.exit()
+        if e.type == pg.KEYDOWN:
+            cheat.update(e.key)
         """if e.type == pg.MOUSEWHEEL:
             if not shop.opened:
                 break
