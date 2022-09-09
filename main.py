@@ -23,7 +23,7 @@ from classes.settings import Settings
 
 pg.init()
 
-pg.display.set_caption(resource_path("Cookie Clicker"))
+pg.display.set_caption(resource_path("Retro Cookie Clicker"))
 pg.display.set_icon(pg.image.load(resource_path("textures/icon/icon.png")))
 
 screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
