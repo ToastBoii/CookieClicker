@@ -50,6 +50,8 @@ setting = Settings(screen)
 fontSmall = pg.font.Font(resource_path("textures/font/retro.ttf"), 16)
 
 framer = 1
+
+
 # Game Loop
 
 
@@ -74,7 +76,7 @@ def render():
     particle.render(deltaTime)
 
     display.render(handler.cookies, handler.tempCps)
-    cookie.render()
+    cookie.render(handler.cpc, deltaTime)
 
     shop.render()
     setting.render()
@@ -108,9 +110,14 @@ def update():
 
     particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
     golden.update(deltaTime, mousePos, mousePressed)
-    handler.update(shop.cpsFromItems, 1, cookie.checkCookiePressed(mousePos, mousePressed), golden.active,
-                   golden.cookieEffect)
-    cookie.update(mousePos, mousePressed)
+
+    if shop.cpsFromItems * 0.1 <= 10:
+        handler.update(shop.cpsFromItems, 1, cookie.checkCookiePressed(mousePos, mousePressed),
+                       golden.active, golden.cookieEffect)
+    else:
+        handler.update(shop.cpsFromItems, shop.cpsFromItems * 0.1, cookie.checkCookiePressed(mousePos, mousePressed),
+                       golden.active, golden.cookieEffect)
+    cookie.update(mousePos, mousePressed, handler.cpc)
 
     updateParameters(handler.cookies, deltaTime)
 
