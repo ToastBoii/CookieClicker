@@ -111,7 +111,7 @@ def update():
         handler.cheatCookies -= shop.debt
         shop.debt = 0
 
-    particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps)
+    particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps, cheat.active)
     golden.update(deltaTime, mousePos, mousePressed)
 
     if shop.cpsFromItems * 0.1 <= 1:

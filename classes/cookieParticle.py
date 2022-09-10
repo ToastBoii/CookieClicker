@@ -18,7 +18,7 @@ class CookieParticle:
 
         self.pressed = False
 
-    def update(self, cookiePressed, deltaTime, cps):
+    def update(self, cookiePressed, deltaTime, cps, cheat):
 
         # Remove Unrenderd Particles
 
@@ -36,7 +36,10 @@ class CookieParticle:
         # Add Particles on Click
 
         if cookiePressed and not self.pressed:
-            self.particles.append(pg.image.load(resource_path("textures/particle.png")))
+            if cheat:
+                self.particles.append(pg.image.load(resource_path("textures/goldenCookies/goldenCookie.png")))
+            else:
+                self.particles.append(pg.image.load(resource_path("textures/particle.png")))
             self.particles[len(self.particles) - 1] = pg.transform.scale(self.particles[len(self.particles) - 1], (32,
                                                                                                                    32))
             self.particles[len(self.particles) - 1].convert()
