@@ -98,7 +98,6 @@ def update():
     setting.update(deltaTime, mousePos, mousePressed, handler.cookies, shop.boughtItems)
     if setting.load:
         handler.cookies = setting.loadedCookies
-        handler.cheatCookies = setting.loadedCookies + handler.randOffset
         for i in range(len(shop.boughtItems)):
             shop.boughtItems[i] = setting.loadedBoughtItems[i]
         setting.load = False
@@ -108,7 +107,6 @@ def update():
     shop.update(deltaTime, mousePos, mousePressed, handler.cookies)
     if shop.debt != 0:
         handler.cookies -= shop.debt
-        handler.cheatCookies -= shop.debt
         shop.debt = 0
 
     particle.update(cookie.checkCookiePressed(mousePos, mousePressed), deltaTime, handler.cps, cheat.active)
