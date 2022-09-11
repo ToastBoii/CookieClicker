@@ -33,6 +33,9 @@ class GoldenCookieFrame:
 
             onePixel = imageRect.width / 16
             durationPixel = duration / 20 * 14 * onePixel
-            draw_rect_alpha(self.screen, (83, 105, 163, 150), pg.Rect(pg.display.get_surface().get_width() - 10 - onePixel * 15, 10 + (onePixel * 14 - durationPixel) + onePixel, imageRect.width - onePixel * 2, durationPixel))
+            draw_rect_alpha(self.screen, (83, 105, 163, 150), pg.Rect(pg.display.get_surface().get_width() - 10 -
+                                                                      onePixel * 15, 10 + (onePixel * 14 - durationPixel
+                                                                                           ) + onePixel, imageRect.width
+                                                                      - onePixel * 2, durationPixel))
 
             self.screen.blit(self.frame, frameRect)

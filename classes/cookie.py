@@ -31,7 +31,7 @@ class Cookie:
         self.cookieRect = self.cookieImg.get_rect()
         self.cookieRect.center = (int(self.screen.get_width() / 2), int(self.screen.get_height() / 2))
 
-    def update(self, mousePos, mouseClicked, cpc):
+    def update(self, mousePos, mouseClicked, cpc, goldenCookie, effect):
 
         # Animate Cookie
 
@@ -41,6 +41,9 @@ class Cookie:
 
                 if not self.clicked:
                     self.clicked = True
+
+                    if goldenCookie and effect == 1:
+                        cpc = cpc * 8
 
                     self.cpcText.append([self.fontSmall.render("+" + numberize(cpc), False, (255, 255, 255)), 1,
                                          mousePos])
@@ -59,7 +62,7 @@ class Cookie:
         else:
             return False
 
-    def render(self, cpc, deltaTime, skin):
+    def render(self, deltaTime, skin):
 
         # Scale Image
 

@@ -79,7 +79,7 @@ def render():
     particle.render(deltaTime)
 
     display.render(handler.cookies, handler.tempCps)
-    cookie.render(handler.cpc, deltaTime, cheat.active)
+    cookie.render(deltaTime, cheat.active)
 
     shop.render()
     setting.render()
@@ -118,7 +118,7 @@ def update():
     else:
         handler.update(shop.cpsFromItems, shop.cpsFromItems * 0.1, cookie.checkCookiePressed(mousePos, mousePressed),
                        golden.active, golden.cookieEffect)
-    cookie.update(mousePos, mousePressed, handler.cpc)
+    cookie.update(mousePos, mousePressed, handler.cpc, golden.active, golden.cookieEffect)
 
     updateParameters(handler.cookies, deltaTime)
 
